@@ -23,6 +23,10 @@ jobs:
     name: Hello World Job
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello World !"
+      - name: Cehckout repository
+        uses: actions/checkout@v3
+      - name: Echo hello
+        run:  |
+          echo "Hello World !"
 
 
