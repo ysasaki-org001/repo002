@@ -1,0 +1,28 @@
+name: "standard_github_lesson_repo002"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - working/**
+      - .github/workflows/**
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+    working-directory: "10_infra/" # terraformを実行するディレクトリ
+
+jobs:
+  sample:
+    name: Hello World Job
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello World !"
+
+
