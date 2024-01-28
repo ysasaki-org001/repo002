@@ -22,7 +22,7 @@ jobs:
   sample:
     name: Hello World Job
     runs-on: ubuntu-latest
-    environment: production # 承認フロー
+#    environment: production # 承認フロー
     steps:
       - name: Cehckout repository
         uses: actions/checkout@v3
