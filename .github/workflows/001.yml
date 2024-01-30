@@ -9,6 +9,11 @@ on:
       - .github/workflows/**
   workflow_dispatch:
 
+env:  ##change this URL!!
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL_REPO002 }} #SLACK_WEBHOOK_URL_REPO002
+  SLACK_CHANNEL: info-githubactions_repo002
+
+
 permissions:
   id-token: write
   contents: read
@@ -30,4 +35,27 @@ jobs:
         run:  |
           echo "Hello World !"
 
+# slack
+      - name: Success
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: success()
+        env:
+          SLACK_TITLE: deploy flow / Success
+          SLACK_COLOR: good
+          SLACK_MESSAGE: Message for Success
 
+      - name: Failure
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        env:
+          SLACK_TITLE: deploy flow / Failure
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: Message for Failure
+
+      - name: Cancel
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: cancelled()
+        env:
+          SLACK_TITLE: deploy flow / Cancel
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: Message for Cancel
