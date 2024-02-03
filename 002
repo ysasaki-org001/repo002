@@ -1,0 +1,8 @@
+EXECUTE=""
+
+if [ ! ${EXECUTE} = "y" ]; then
+    echo "処理を終了します。"
+    exit
+fi
+
+
