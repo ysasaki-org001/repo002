@@ -1,0 +1,61 @@
+name: "standard_github_lesson_repo002"
+
+on:
+  push:
+    branches:
+      - dan
+    paths:
+      - working/**
+      - .github/workflows/**
+  workflow_dispatch:
+
+env:  ##change this URL!!
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL_REPO002 }} #SLACK_WEBHOOK_URL_REPO002
+  SLACK_CHANNEL: info-githubactions_repo002
+
+
+permissions:
+  id-token: write
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+    working-directory: "working/" # terraformを実行するディレクトリ
+
+jobs:
+  sample:
+    name: Hello DAN World Job
+    runs-on: ubuntu-latest
+#    environment: production # 承認フロー
+    steps:
+      - name: Cehckout repository steps name
+        uses: actions/checkout@v3
+      - name: Echo hello steps name
+        run:  |
+          echo "Hello World ! run command"
+
+# slack
+      - name: Success
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: success()
+        env:
+          SLACK_TITLE: deploy flow / Success yyyyyyyyyyyyyyyyyyyyyy
+          SLACK_COLOR: good
+          SLACK_MESSAGE: Message for Success xxxxxxxxxxxxxxxxxxxxxx
+
+      - name: Failure
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        env:
+          SLACK_TITLE: deploy flow / Failure
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: Message for Failure
+
+      - name: Cancel
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: cancelled()
+        env:
+          SLACK_TITLE: deploy flow / Cancel
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: Message for Cancel
